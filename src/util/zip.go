@@ -1,7 +1,10 @@
 package util
 
 import (
+	"io"
+	"log"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/alexmullins/zip"
@@ -32,6 +35,37 @@ func CreateEncryptedZip(name, content, password string, tags ...string) error {
 	_, err = fileWriter.Write([]byte(content))
 	if err != nil {
 		return err
+	}
+
+	return nil
+}
+
+func ReadEncryptedZip(file, password string) error {
+	// get absolute path of file
+	absPath, err := filepath.Abs(file)
+	if err != nil {
+		return err
+	}
+
+	zipReader, err := zip.OpenReader(absPath)
+	if err != nil {
+		return err
+	}
+	defer zipReader.Close()
+
+	for _, file := range zipReader.File {
+		if file.IsEncrypted() {
+			file.SetPassword(password)
+			f, err := file.Open()
+			if err != nil {
+				log.Fatal(err)
+			}
+			content, err := io.ReadAll(f)
+			if err != nil {
+				log.Fatal(err)
+			}
+			log.Println(file.Name, string(content))
+		}
 	}
 
 	return nil

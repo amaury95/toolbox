@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/amaury95/toolbox/cmd/gen/command"
+	"github.com/amaury95/toolbox/src/command"
 )
 
 func main() {

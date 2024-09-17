@@ -8,8 +8,8 @@ import (
 )
 
 var rootCmd = &cobra.Command{
-	Use:   "gen",
-	Short: "Generate a password, an ethereum address, etc.",
+	Use:   "toolbox",
+	Short: "A collection of useful tools",
 }
 
 // Execute is called from the main function to start the CLI.
