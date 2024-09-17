@@ -24,3 +24,7 @@ minor:
 # Major changes: Breaks the API
 major:
 	@make release version=${GIT_NEXT_MAJOR}
+
+# Install latest version
+install:
+	@go install github.com/amaury95/toolbox/cmd/toolbox@${GIT_VERSION}
