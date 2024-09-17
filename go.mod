@@ -1,4 +1,4 @@
-module github.com/amaury95/tools
+module github.com/amaury95/toolbox
 
 go 1.23.1
 

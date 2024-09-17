@@ -4,7 +4,7 @@ import (
 	"log"
 	"strings"
 
-	"github.com/amaury95/tools/src/util"
+	"github.com/amaury95/toolbox/src/util"
 	"github.com/spf13/cobra"
 )
 

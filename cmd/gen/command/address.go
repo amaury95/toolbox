@@ -5,7 +5,7 @@ import (
 	"encoding/hex"
 	"log"
 
-	"github.com/amaury95/tools/src/util"
+	"github.com/amaury95/toolbox/src/util"
 	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/spf13/cobra"
 )
