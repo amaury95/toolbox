@@ -6,7 +6,7 @@ import (
 )
 
 var genCmd = &cobra.Command{
-	Use:   "gen",
+	Use:   "generate",
 	Short: "Generate a password, an ethereum address, etc.",
 }
 
