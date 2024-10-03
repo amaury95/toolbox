@@ -12,8 +12,28 @@ var genCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(genCmd)
+	initBitcoinCmd()
 	initEthereumCmd()
 	initPasswordCmd()
+}
+
+// Bitcoin
+
+var _bitcoin_tags []string
+var _bitcoin_encrypt_password string
+
+var bitcoinCmd = &cobra.Command{
+	Use:   "bitcoin",
+	Short: "Generate a Bitcoin private key and address",
+	Run: func(cmd *cobra.Command, args []string) {
+		gen.GenerateBitcoinKey(_bitcoin_encrypt_password, _bitcoin_tags...)
+	},
+}
+
+func initBitcoinCmd() {
+	genCmd.AddCommand(bitcoinCmd)
+	bitcoinCmd.Flags().StringSliceVarP(&_bitcoin_tags, "tag", "t", []string{}, "Tags for the password")
+	bitcoinCmd.Flags().StringVarP(&_bitcoin_encrypt_password, "encrypt-password", "e", "", "Password for the encryption")
 }
 
 // Ethereum
