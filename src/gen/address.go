@@ -35,7 +35,7 @@ func GenerateEthereumKey(encryptPassword string, tags ...string) {
 	}
 }
 
-func GenerateMnemonic(encryptPassword string, tags ...string) {
+func GenerateMnemonic(name, encryptPassword string, tags ...string) {
 	entropy, err := bip39.NewEntropy(128)
 	if err != nil {
 		log.Fatalf("Failed to generate entropy: %v", err)
@@ -48,7 +48,7 @@ func GenerateMnemonic(encryptPassword string, tags ...string) {
 	log.Println("Generated Mnemonic:", mnemonic)
 
 	if encryptPassword != "" {
-		if err := util.CreateEncryptedZip("mnemonic", mnemonic, encryptPassword, tags...); err != nil {
+		if err := util.CreateEncryptedZip(name, mnemonic, encryptPassword, tags...); err != nil {
 			log.Fatalf("Failed to zip private key with password: %v", err)
 		}
 	}

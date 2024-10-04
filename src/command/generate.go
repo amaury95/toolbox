@@ -19,6 +19,7 @@ func init() {
 
 // Mnemonic
 
+var _mnemonic_name string
 var _mnemonic_tags []string
 var _mnemonic_encrypt_password string
 
@@ -26,12 +27,13 @@ var mnemonicCmd = &cobra.Command{
 	Use:   "mnemonic",
 	Short: "Generate a Mnemonic",
 	Run: func(cmd *cobra.Command, args []string) {
-		gen.GenerateMnemonic(_mnemonic_encrypt_password, _mnemonic_tags...)
+		gen.GenerateMnemonic(_mnemonic_name, _mnemonic_encrypt_password, _mnemonic_tags...)
 	},
 }
 
 func initMnemonicCmd() {
 	genCmd.AddCommand(mnemonicCmd)
+	mnemonicCmd.Flags().StringVarP(&_mnemonic_name, "name", "n", "", "Name for the mnemonic")
 	mnemonicCmd.Flags().StringSliceVarP(&_mnemonic_tags, "tag", "t", []string{}, "Tags for the password")
 	mnemonicCmd.Flags().StringVarP(&_mnemonic_encrypt_password, "encrypt-password", "e", "", "Password for the encryption")
 }
