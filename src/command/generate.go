@@ -12,28 +12,28 @@ var genCmd = &cobra.Command{
 
 func init() {
 	rootCmd.AddCommand(genCmd)
-	initBitcoinCmd()
+	initMnemonicCmd()
 	initEthereumCmd()
 	initPasswordCmd()
 }
 
-// Bitcoin
+// Mnemonic
 
-var _bitcoin_tags []string
-var _bitcoin_encrypt_password string
+var _mnemonic_tags []string
+var _mnemonic_encrypt_password string
 
-var bitcoinCmd = &cobra.Command{
-	Use:   "bitcoin",
-	Short: "Generate a Bitcoin private key and address",
+var mnemonicCmd = &cobra.Command{
+	Use:   "mnemonic",
+	Short: "Generate a Mnemonic",
 	Run: func(cmd *cobra.Command, args []string) {
-		gen.GenerateBitcoinKey(_bitcoin_encrypt_password, _bitcoin_tags...)
+		gen.GenerateMnemonic(_mnemonic_encrypt_password, _mnemonic_tags...)
 	},
 }
 
-func initBitcoinCmd() {
-	genCmd.AddCommand(bitcoinCmd)
-	bitcoinCmd.Flags().StringSliceVarP(&_bitcoin_tags, "tag", "t", []string{}, "Tags for the password")
-	bitcoinCmd.Flags().StringVarP(&_bitcoin_encrypt_password, "encrypt-password", "e", "", "Password for the encryption")
+func initMnemonicCmd() {
+	genCmd.AddCommand(mnemonicCmd)
+	mnemonicCmd.Flags().StringSliceVarP(&_mnemonic_tags, "tag", "t", []string{}, "Tags for the password")
+	mnemonicCmd.Flags().StringVarP(&_mnemonic_encrypt_password, "encrypt-password", "e", "", "Password for the encryption")
 }
 
 // Ethereum

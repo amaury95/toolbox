@@ -2,13 +2,12 @@ package gen
 
 import (
 	"crypto/ecdsa"
-	"crypto/rand"
 	"encoding/hex"
 	"log"
 
 	"github.com/amaury95/toolbox/src/util"
-	"github.com/btcsuite/btcd/btcec/v2"
 	"github.com/ethereum/go-ethereum/crypto"
+	"github.com/tyler-smith/go-bip39"
 )
 
 func GenerateEthereumKey(encryptPassword string, tags ...string) {
@@ -36,20 +35,20 @@ func GenerateEthereumKey(encryptPassword string, tags ...string) {
 	}
 }
 
-func GenerateBitcoinKey(encryptPassword string, tags ...string) {
-	privateKey, err := ecdsa.GenerateKey(btcec.S256(), rand.Reader)
+func GenerateMnemonic(encryptPassword string, tags ...string) {
+	entropy, err := bip39.NewEntropy(128)
 	if err != nil {
-		log.Fatalf("Failed to generate private key: %v", err)
+		log.Fatalf("Failed to generate entropy: %v", err)
+	}
+	mnemonic, err := bip39.NewMnemonic(entropy)
+	if err != nil {
+		log.Fatalf("Failed to generate mnemonic: %v", err)
 	}
 
-	privateKeyHex := hex.EncodeToString(privateKey.D.Bytes())
-	log.Println("Generated Private Key:", privateKeyHex)
-
-	address := crypto.PubkeyToAddress(privateKey.PublicKey)
-	log.Println("Generated Bitcoin Address:", address.Hex())
+	log.Println("Generated Mnemonic:", mnemonic)
 
 	if encryptPassword != "" {
-		if err := util.CreateEncryptedZip(address.String(), privateKeyHex, encryptPassword, tags...); err != nil {
+		if err := util.CreateEncryptedZip("mnemonic", mnemonic, encryptPassword, tags...); err != nil {
 			log.Fatalf("Failed to zip private key with password: %v", err)
 		}
 	}
