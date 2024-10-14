@@ -241,8 +241,10 @@ func typeOf(t abi.Type) string {
 		return "bytes"
 	case abi.FixedPointTy:
 		return "double"
-	case abi.IntTy, abi.UintTy:
+	case abi.IntTy:
 		return "int64"
+	case abi.UintTy:
+		return "uint64"
 	default:
 		return t.String()
 	}
