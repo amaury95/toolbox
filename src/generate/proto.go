@@ -187,8 +187,8 @@ func definitionTuple(t abi.Type) string {
 	message := new(bytes.Buffer)
 	message.WriteString(fmt.Sprintf("message %s {\n", t.TupleRawName))
 	index := 1
-	for _, input := range t.TupleElems {
-		message.WriteString(definitionType("arg"+strconv.Itoa(index), *input, index))
+	for i, input := range t.TupleElems {
+		message.WriteString(definitionType(t.TupleRawNames[i], *input, index))
 		index++
 	}
 	message.WriteString("};")

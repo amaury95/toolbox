@@ -8,6 +8,7 @@ GIT_NEXT_MAJOR=$(shell echo $(GIT_CURRENT_VERSION) | awk -F. '{print $$1+1".0.0"
 
 tag:
 	@git tag $(version)
+	@echo $(version) > src/version/VERSION
 
 push:
 	@git push origin ${GIT_BRANCH} $(version)
