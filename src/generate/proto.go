@@ -189,7 +189,7 @@ func definitionTuple(t abi.Type) string {
 	index := 1
 	for i, input := range t.TupleElems {
 		name := strcase.SnakeCase(t.TupleRawNames[i])
-		message.WriteString(definitionType(strings.TrimPrefix(name, "_"), *input, index))
+		message.WriteString(definitionType(nameWithoutPrefixAndSuffix(name), *input, index))
 		index++
 	}
 	message.WriteString("};")
@@ -220,7 +220,7 @@ func definitionType(name string, t abi.Type, index int) string {
 	}
 	value.WriteString(typeOf(t))
 	value.WriteString(" ")
-	value.WriteString(strings.TrimPrefix(defName, "_"))
+	value.WriteString(nameWithoutPrefixAndSuffix(defName))
 	value.WriteString(" = ")
 	value.WriteString(strconv.Itoa(index))
 	value.WriteString(";\n")
@@ -276,4 +276,8 @@ func SortMap[T any](m map[string]T) []Tuple[T] {
 		methods = append(methods, Tuple[T]{Key: k, Value: m[k]})
 	}
 	return methods
+}
+
+func nameWithoutPrefixAndSuffix(name string) string {
+	return strings.TrimPrefix(strings.TrimSuffix(name, "_"), "_")
 }
