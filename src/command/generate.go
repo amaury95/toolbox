@@ -1,7 +1,9 @@
 package command
 
 import (
-	"github.com/amaury95/toolbox/src/gen"
+	"os"
+
+	"github.com/amaury95/toolbox/src/generate"
 	"github.com/spf13/cobra"
 )
 
@@ -15,6 +17,7 @@ func init() {
 	initMnemonicCmd()
 	initEthereumCmd()
 	initPasswordCmd()
+	initProtoCmd()
 }
 
 // Mnemonic
@@ -76,4 +79,25 @@ func initPasswordCmd() {
 	passwordCmd.Flags().IntVarP(&_password_size, "size", "s", 64, "Size of the password")
 	passwordCmd.Flags().StringSliceVarP(&_password_tags, "tag", "t", []string{}, "Tags for the password")
 	passwordCmd.Flags().StringVarP(&_password_encrypt_password, "encrypt-password", "e", "", "Password for the encryption")
+}
+
+// Proto
+
+var _proto_model_name string
+var _proto_package string
+var _proto_output_path []string
+
+var protoCmd = &cobra.Command{
+	Use:   "proto",
+	Short: "Generate a proto file from an ABI read from stdin",
+	Run: func(cmd *cobra.Command, args []string) {
+		gen.GenerateProto(os.Stdin, _proto_model_name, _proto_package, _proto_output_path...)
+	},
+}
+
+func initProtoCmd() {
+	genCmd.AddCommand(protoCmd)
+	protoCmd.Flags().StringVarP(&_proto_model_name, "model", "m", "Contract", "Model name for the proto file")
+	protoCmd.Flags().StringVarP(&_proto_package, "pkg", "p", "contract.v1", "Package name for the proto file")
+	protoCmd.Flags().StringArrayVarP(&_proto_output_path, "out", "o", []string{}, "Path to the output file")
 }
