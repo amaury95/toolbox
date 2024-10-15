@@ -98,7 +98,7 @@ func getRpcCalls(evmABI abi.ABI, importEmpty *bool) (rpcCalls, rpcParams []strin
 	queries := []string{"\t/* Queries */"}
 	utils := []string{"\t/* Utils */"}
 
-	params := []string{"\t/* Params */"}
+	params := []string{"/* Params */"}
 
 	for _, method := range SortMap(evmABI.Methods) {
 		methodName := strcase.UpperCamelCase(method.Key)
