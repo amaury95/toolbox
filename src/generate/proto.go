@@ -94,8 +94,11 @@ func getEventSubscriptions(evmABI abi.ABI, importEmpty *bool) (eventSubscription
 }
 
 func getRpcCalls(evmABI abi.ABI, importEmpty *bool) (rpcCalls, rpcParams []string) {
-	rpcCalls = append(rpcCalls, "\t/* RPC Calls */")
-	rpcParams = append(rpcParams, "/* RPC Params */")
+	actions := []string{"\t/* Actions */"}
+	queries := []string{"\t/* Queries */"}
+	utils := []string{"\t/* Utils */"}
+
+	params := []string{"\t/* Params */"}
 
 	for _, method := range SortMap(evmABI.Methods) {
 		methodName := strcase.UpperCamelCase(method.Key)
@@ -106,7 +109,7 @@ func getRpcCalls(evmABI abi.ABI, importEmpty *bool) (rpcCalls, rpcParams []strin
 			*importEmpty = true
 		} else {
 			request = methodName + "Request"
-			rpcParams = append(rpcParams, definitionMessage(request, method.Value.Inputs, false))
+			params = append(params, definitionMessage(request, method.Value.Inputs, false))
 		}
 
 		if len(method.Value.Outputs) == 0 {
@@ -114,11 +117,24 @@ func getRpcCalls(evmABI abi.ABI, importEmpty *bool) (rpcCalls, rpcParams []strin
 			*importEmpty = true
 		} else {
 			response = methodName + "Response"
-			rpcParams = append(rpcParams, definitionMessage(response, method.Value.Outputs, false))
+			params = append(params, definitionMessage(response, method.Value.Outputs, false))
 		}
 
-		rpcCalls = append(rpcCalls, fmt.Sprintf("\trpc %s(%s) returns (%s);", methodName, request, response))
+		switch method.Value.StateMutability {
+		case "pure":
+			utils = append(utils, fmt.Sprintf("\trpc %s(%s) returns (%s);", methodName, request, response))
+		case "view":
+			queries = append(queries, fmt.Sprintf("\trpc %s(%s) returns (%s);", methodName, request, response))
+		default:
+			actions = append(actions, fmt.Sprintf("\trpc %s(%s) returns (%s);", methodName, request, response))
+		}
 	}
+
+	rpcCalls = append(rpcCalls, queries...)
+	rpcCalls = append(rpcCalls, actions...)
+	rpcCalls = append(rpcCalls, utils...)
+
+	rpcParams = append(rpcParams, params...)
 	return
 }
 
