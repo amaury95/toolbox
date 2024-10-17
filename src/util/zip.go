@@ -11,6 +11,9 @@ import (
 )
 
 func CreateEncryptedZip(name, content, password string, tags ...string) error {
+	// Remove .zip extension if it exists, it will be added later
+	name = strings.TrimSuffix(name, ".zip")
+
 	// Create the zip file
 	zipFile, err := os.Create(name + ".zip")
 	if err != nil {
