@@ -1,7 +1,15 @@
 package encrypt
 
-import "github.com/amaury95/toolbox/src/util"
+import (
+	"io"
 
-func EncryptText(name, content, password string) ( error) {
-	return util.CreateEncryptedZip(name, content, password)
+	"github.com/amaury95/toolbox/src/util"
+)
+
+func EncryptText(name, password string, reader io.Reader) error {
+	content, err := io.ReadAll(reader)
+	if err != nil {
+		return err
+	}
+	return util.CreateEncryptedZip(name, string(content), password)
 }
