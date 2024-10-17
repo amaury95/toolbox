@@ -1,6 +1,7 @@
 package util
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"os"
@@ -43,7 +44,7 @@ func CreateEncryptedZip(name, content, password string, tags ...string) error {
 	return nil
 }
 
-func ReadEncryptedZip(file, password string) error {
+func ReadEncryptedZip(file, password string, cleanOutput bool) error {
 	// get absolute path of file
 	absPath, err := filepath.Abs(file)
 	if err != nil {
@@ -67,7 +68,11 @@ func ReadEncryptedZip(file, password string) error {
 			if err != nil {
 				log.Fatal(err)
 			}
-			log.Println(file.Name, string(content))
+			if cleanOutput {
+				fmt.Println(string(content))
+			} else {
+				log.Printf("%s: %s", file.Name, string(content))
+			}
 		}
 	}
 

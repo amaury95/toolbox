@@ -18,13 +18,14 @@ func init() {
 // Encrypted
 
 var _encrypted_file string
+var _encrypted_clean_output bool
 var _encrypted_password string
 
 var encryptedCmd = &cobra.Command{
 	Use:   "encrypted",
 	Short: "Read an encrypted file",
 	Run: func(cmd *cobra.Command, args []string) {
-		read.ReadEncryptedFile(_encrypted_file, _encrypted_password)
+		read.ReadEncryptedFile(_encrypted_file, _encrypted_password, _encrypted_clean_output)
 	},
 }
 
@@ -32,4 +33,5 @@ func initEncryptedCmd() {
 	readCmd.AddCommand(encryptedCmd)
 	encryptedCmd.Flags().StringVarP(&_encrypted_file, "file", "f", "", "File to read")
 	encryptedCmd.Flags().StringVarP(&_encrypted_password, "password", "p", "", "Password to decrypt the file")
+	encryptedCmd.Flags().BoolVarP(&_encrypted_clean_output, "clean", "c", false, "No extra information in the output")
 }
