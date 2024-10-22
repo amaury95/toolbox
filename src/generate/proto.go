@@ -14,7 +14,7 @@ import (
 	"github.com/stoewer/go-strcase"
 )
 
-func GenerateProto(reader io.Reader, modelName, packageName string, outputPaths ...string) {
+func GenerateProto(reader io.Reader, typeName, packageName string, outputPaths ...string) {
 	evmABI, err := abi.JSON(reader)
 	if err != nil {
 		log.Fatalf("Failed to parse ABI: %v", err)
@@ -45,7 +45,7 @@ func GenerateProto(reader io.Reader, modelName, packageName string, outputPaths 
 
 	// Service
 	proto.WriteString("\n\n/* Service */")
-	proto.WriteString(fmt.Sprintf("\nservice %sService {\n", modelName))
+	proto.WriteString(fmt.Sprintf("\nservice %sService {\n", typeName))
 
 	// Event Subscriptions and RPC Calls
 	proto.WriteString(strings.Join(append(eventSubscriptions, rpcCalls...), "\n"))

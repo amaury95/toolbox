@@ -83,7 +83,7 @@ func initPasswordCmd() {
 
 // Proto
 
-var _proto_model_name string
+var _proto_type string
 var _proto_package string
 var _proto_output_path []string
 
@@ -91,13 +91,13 @@ var protoCmd = &cobra.Command{
 	Use:   "proto",
 	Short: "Generate a proto file from an ABI read from stdin",
 	Run: func(cmd *cobra.Command, args []string) {
-		gen.GenerateProto(os.Stdin, _proto_model_name, _proto_package, _proto_output_path...)
+		gen.GenerateProto(os.Stdin, _proto_type, _proto_package, _proto_output_path...)
 	},
 }
 
 func initProtoCmd() {
 	genCmd.AddCommand(protoCmd)
-	protoCmd.Flags().StringVarP(&_proto_model_name, "model", "m", "Contract", "Model name for the proto file")
+	protoCmd.Flags().StringVarP(&_proto_type, "type", "t", "Contract", "Type name for the proto file")
 	protoCmd.Flags().StringVarP(&_proto_package, "pkg", "p", "contract.v1", "Package name for the proto file")
 	protoCmd.Flags().StringArrayVarP(&_proto_output_path, "out", "o", []string{}, "Path to the output file")
 }
