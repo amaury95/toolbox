@@ -11,15 +11,10 @@ import (
 
 // contentCmd represents the content command
 var contentCmd = &cobra.Command{
-	Use:   "content <value>",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Args: cobra.ExactArgs(1),
+	Use:   "content <text>",
+	Short: "Encrypt a text",
+	Long:  `Encrypt a text using a password`,
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		encrypt.EncryptText(_encrypt_output, util.PromptPasswordConfirm(), args[0])
 	},

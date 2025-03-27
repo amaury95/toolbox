@@ -16,13 +16,8 @@ var _proto_package string
 // protoCmd represents the proto command
 var protoCmd = &cobra.Command{
 	Use:   "proto",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generate a proto file",
+	Long:  `Generate a proto file`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gen.GenerateProto(os.Stdin, _proto_type, _proto_package, _generate_output)
 	},

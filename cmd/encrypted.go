@@ -13,14 +13,9 @@ var _encrypted_clean_output bool
 // encryptedCmd represents the encrypted command
 var encryptedCmd = &cobra.Command{
 	Use:   "encrypted <file>",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
-	Args: cobra.ExactArgs(1),
+	Short: "Decrypt a file",
+	Long:  `Decrypt a file using a password`,
+	Args:  cobra.ExactArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
 		util.ReadEncryptedZip(args[0], util.PromptPassword(), _encrypted_clean_output)
 	},

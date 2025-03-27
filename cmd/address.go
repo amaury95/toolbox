@@ -14,13 +14,8 @@ var _address_protocol string
 // addressCmd represents the address command
 var addressCmd = &cobra.Command{
 	Use:   "address",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Generate an address",
+	Long:  `Generate an address for a given protocol`,
 	Run: func(cmd *cobra.Command, args []string) {
 		gen.GenerateEthereumKey(_generate_output, util.PromptPasswordConfirm(), _address_protocol, _generate_tags...)
 	},
