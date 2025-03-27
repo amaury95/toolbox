@@ -31,6 +31,8 @@ func PromptPassword() string {
 	if err != nil {
 		panic(err)
 	}
+	fmt.Println()
+	
 	return string(password)
 }
 
