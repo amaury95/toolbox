@@ -7,11 +7,8 @@ import (
 	"github.com/amaury95/toolbox/src/util"
 )
 
-func GeneratePassword(size int, output string, encryptPassword string, tags ...string) {
-	password, err := util.GenerateRandomPassword(size)
-	if err != nil {
-		log.Fatal(err)
-	}
+func GeneratePassword(size int, opts util.GeneratePasswordOptions, output string, encryptPassword string, tags ...string) {
+	password := util.GenerateRandomPassword(size, opts)
 	log.Println("generated password:", password)
 
 	if encryptPassword != "" {
