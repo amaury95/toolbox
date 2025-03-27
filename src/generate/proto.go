@@ -54,15 +54,13 @@ func GenerateProto(reader io.Reader, typeName, packageName string, outputPaths .
 	// RPC Params
 	proto.WriteString(strings.Join(append(eventParams, rpcParams...), "\n"))
 
-	// File Output
-	for _, outputPath := range outputPaths {
-		os.WriteFile(outputPath, proto.Bytes(), 0644)
+	// Stdout Output
+	if len(outputPaths) == 0 || outputPaths[0] == "" {
+		fmt.Println(proto.String())
+		return
 	}
 
-	// Stdout Output
-	if len(outputPaths) == 0 {
-		fmt.Println(proto.String())
-	}
+	os.WriteFile(outputPaths[0], proto.Bytes(), 0644)
 }
 
 func getEventSubscriptions(evmABI abi.ABI, importEmpty *bool) (eventSubscriptions, eventParams []string) {

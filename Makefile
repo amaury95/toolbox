@@ -34,4 +34,4 @@ release:
 
 # Install the current version
 install:
-	@go install github.com/amaury95/toolbox/cmd/toolbox@${GIT_CURRENT_VERSION}
+	@go install github.com/amaury95/toolbox@${GIT_CURRENT_VERSION}

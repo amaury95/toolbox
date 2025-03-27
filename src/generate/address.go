@@ -10,7 +10,16 @@ import (
 	"github.com/tyler-smith/go-bip39"
 )
 
-func GenerateEthereumKey(encryptPassword string, tags ...string) {
+func GenerateEthereumKey(output, encryptPassword, protocol string, tags ...string) {
+	switch protocol {
+	case "ethereum":
+		generateEthereumKey(output, encryptPassword, tags...)
+	default:
+		log.Fatalf("Unsupported protocol: %s", protocol)
+	}
+}
+
+func generateEthereumKey(output, encryptPassword string, tags ...string) {
 	privateKey, err := crypto.GenerateKey()
 	if err != nil {
 		log.Fatalf("Failed to generate private key: %v", err)
@@ -29,7 +38,10 @@ func GenerateEthereumKey(encryptPassword string, tags ...string) {
 	log.Println("Generated Private Key:", privateKeyHex)
 
 	if encryptPassword != "" {
-		if err := util.CreateEncryptedZip(address.Hex(), privateKeyHex, encryptPassword, tags...); err != nil {
+		if output == "" {
+			output = address.Hex()
+		}
+		if err := util.CreateEncryptedZip(output, privateKeyHex, encryptPassword, tags...); err != nil {
 			log.Fatalf("Failed to zip private key with password: %v", err)
 		}
 	}
@@ -48,6 +60,9 @@ func GenerateMnemonic(name, encryptPassword string, tags ...string) {
 	log.Println("Generated Mnemonic:", mnemonic)
 
 	if encryptPassword != "" {
+		if name == "" {
+			name = "mnemonic"
+		}
 		if err := util.CreateEncryptedZip(name, mnemonic, encryptPassword, tags...); err != nil {
 			log.Fatalf("Failed to zip private key with password: %v", err)
 		}
