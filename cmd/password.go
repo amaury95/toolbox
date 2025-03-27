@@ -28,6 +28,7 @@ to quickly create a Cobra application.`,
 
 func init() {
 	generateCmd.AddCommand(passwordCmd)
+	passwordCmd.Flags().IntVarP(&_password_length, "length", "l", 16, "Length of the password")
 
 	// Here you will define your flags and configuration settings.
 
