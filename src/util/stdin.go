@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"fmt"
 	"os"
-
 	"syscall"
 
 	"golang.org/x/term"
@@ -34,6 +33,16 @@ func PromptPassword() string {
 	fmt.Println()
 	
 	return string(password)
+}
+
+func PromptPrivateKey() string {
+	fmt.Print("Enter private key: ")
+	key, err := term.ReadPassword(int(syscall.Stdin))
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println()
+	return string(key)
 }
 
 func PromptPasswordConfirm() string {
