@@ -5,6 +5,7 @@ go 1.23.1
 require (
 	github.com/alexmullins/zip v0.0.0-20180717182244-4affb64b04d0
 	github.com/ethereum/go-ethereum v1.14.8
+	github.com/go-echarts/go-echarts/v2 v2.7.2
 	github.com/spf13/cobra v1.9.1
 	github.com/stoewer/go-strcase v1.3.0
 	github.com/stretchr/testify v1.9.0
