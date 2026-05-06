@@ -11,7 +11,7 @@ import (
 
 // GetLineData reads a CSV file whose first row is headers.
 // It finds columns named xCol and yCol and returns one Point per data row (parsed as float64).
-func GetLineData(csvFile, xCol, yCol string, compressX bool) []Point {
+func GetLineData(csvFile, xCol, yCol string, compressX bool, flattenX bool) []Point {
 	f, err := os.Open(csvFile)
 	if err != nil {
 		panic(err)
@@ -58,7 +58,11 @@ func GetLineData(csvFile, xCol, yCol string, compressX bool) []Point {
 	sort.SliceStable(out, func(i, j int) bool {
 		return out[i].X < out[j].X
 	})
-	if compressX {
+	if flattenX {
+		for i := 0; i < len(out); i++ {
+			out[i].X = float64(i)
+		}
+	} else if compressX {
 		for i := 1; i < len(out); i++ {
 			out[i].X -= out[0].X
 		}
