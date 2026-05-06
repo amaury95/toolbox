@@ -30,8 +30,8 @@ figure as a PNG. The server keeps running until you stop the process (Ctrl+C).`,
 func init() {
 	plotCmd.AddCommand(lineCmd)
 
-	lineCmd.Flags().StringVarP(&_line_x_col, "x", "x", "", "X column to plot")
-	lineCmd.Flags().StringVarP(&_line_y_col, "y", "y", "", "Y column to plot")
+	lineCmd.Flags().StringVarP(&_line_x_col, "x", "x", "timestamp", "X column to plot")
+	lineCmd.Flags().StringVarP(&_line_y_col, "y", "y", "price", "Y column to plot")
 	lineCmd.Flags().StringVarP(&_line_title, "title", "t", "Plotter", "Title of the plot")
 	lineCmd.Flags().BoolVarP(&_line_compress_x, "compress-x", "c", false, "Compress the X axis")
 }
